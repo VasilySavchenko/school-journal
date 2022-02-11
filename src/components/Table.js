@@ -1,13 +1,14 @@
 import React from 'react';
 
-function Table({ data, column, rate }) {
+function Table({ data, column }) {
   function checkPlayer(e) {
     if (e.target.innerText === '') {
       e.target.innerText = 'H';
-      e.target.style.background = 'red';
+      e.target.className = 'bg-danger';
+      localStorage.setItem('color', 'red');
     } else if (e.target.innerText === 'H') {
       e.target.innerText = '';
-      e.target.style.background = 'green';
+      e.target.className = 'bg-success';
     }
   }
 
@@ -42,14 +43,14 @@ function Table({ data, column, rate }) {
                 <td>
                   {obj.FirstName} {obj.SecondName} {obj.LastName}
                 </td>
-                {column?.map((obje, index) => {
+                {column?.map((obje) => {
                   return (
                     <td
+                      className="bg-success gf"
                       key={obje.Id}
                       onClick={(e) => {
                         checkPlayer(e);
                       }}
-                      style={{ background: 'green' }}
                     ></td>
                   );
                 })}

@@ -1,9 +1,4 @@
 export const dataSelector = (state) => state.toolkit.data;
 export const columnSelector = (state) => state.toolkit.column;
 export const rateSelector = (state) => state.toolkit.rate;
-export const passesSelector = (state) => state.toolkit.passes;
-export const scoreFiveSelector = (state) => state.toolkit.scoreFive;
-export const scoreFourSelector = (state) => state.toolkit.scoreFour;
-export const scoreThreeSelector = (state) => state.toolkit.scoreThree;
-export const scoreTwoSelector = (state) => state.toolkit.scoreTwo;
-export const scoreOneSelector = (state) => state.toolkit.scoreOne;
+export const columnInfoSelector = (state) => state.toolkit.columnInfo;

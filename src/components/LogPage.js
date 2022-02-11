@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -19,12 +18,11 @@ import Table from './Table';
 import LoadingSpinner from './icons/Spinner';
 
 function LogPage() {
+  const dispatch = useDispatch();
   const data = useSelector(dataSelector);
   const column = useSelector(columnSelector);
   const rate = useSelector(rateSelector);
   const loading = useSelector((state) => state.toolkit.status);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchColumn());

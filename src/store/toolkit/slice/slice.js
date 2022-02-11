@@ -12,13 +12,9 @@ const initialState = {
   column: null,
   rate: null,
   rateId: null,
-  passes: null,
-  scoreFive: null,
-  scoreFour: null,
-  scoreThree: null,
-  scoreTwo: null,
+  columnInfo: null,
 };
-const newReducer = createSlice({
+const toolkitReducer = createSlice({
   name: 'data',
   initialState,
   reducers: {
@@ -27,31 +23,15 @@ const newReducer = createSlice({
         return obj.ColumnId === action.payload;
       });
     },
-    dataGetPasses: (state, action) => {
-      state.passes = state.rateId.filter((obj) => {
-        return obj.Title === 'Н';
-      });
-      state.scoreFive = state.rateId.filter((obj) => {
-        return obj.Title === '5';
-      });
-      state.scoreFour = state.rateId.filter((obj) => {
-        return obj.Title === '4';
-      });
-      state.scoreThree = state.rateId.filter((obj) => {
-        return obj.Title === '3';
-      });
-      state.scoreTwo = state.rateId.filter((obj) => {
-        return obj.Title === '2';
-      });
-      state.scoreOne = state.rateId.filter((obj) => {
-        return obj.Title === '1';
-      });
+    dataGetPasses: (state) => {
+      state.columnInfo = state.rateId.reduce(function (acc, item) {
+        if (item.Title === 'Н' || item.Title === 'H') {
+          acc['pasess'] = (acc[item.Title] || 0) + 1;
+        }
+        acc[item.Title] = (acc[item.Title] || 0) + 1;
+        return acc;
+      }, {});
     },
-    // dataGetScoreFive: (state, action) => {},
-    // dataGetScoreFour: (state, action) => {},
-    // dataGetScoreThree: (state, action) => {},
-    // dataGetScoreTwo: (state, action) => {},
-    // dataGetScoreOne: (state, action) => {},
   },
 
   extraReducers: {
@@ -60,10 +40,13 @@ const newReducer = createSlice({
       state.error = null;
     },
     [fetchData.fulfilled]: (state, action) => {
-      state.status = 'True';
+      state.status = true;
       state.data = action.payload;
     },
-    [fetchData.rejected]: (state, action) => {},
+    [fetchData.rejected]: (state, action) => {
+      state.status = false;
+      state.error = action.payload;
+    },
     [fetchColumn.fulfilled]: (state, action) => {
       state.column = action.payload;
     },
@@ -72,14 +55,6 @@ const newReducer = createSlice({
     },
   },
 });
-export const {
-  datagetRateId,
-  dataGetPasses,
-  // dataGetScoreFive,
-  // dataGetScoreFour,
-  // dataGetScoreThree,
-  // dataGetScoreTwo,
-  // dataGetScoreOne,
-} = newReducer.actions;
+export const { datagetRateId, dataGetPasses } = toolkitReducer.actions;
 
-export default newReducer.reducer;
+export default toolkitReducer.reducer;

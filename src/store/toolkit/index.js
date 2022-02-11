@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { routerReducer } from 'react-router-redux';
-import newReducer from './slice/slice';
+import toolkitReducer from './slice/slice';
 
 const rootReduser = combineReducers({
   routing: routerReducer,
-  toolkit: newReducer,
+  toolkit: toolkitReducer,
 });
 
 const store = configureStore({
