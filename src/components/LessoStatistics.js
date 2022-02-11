@@ -13,11 +13,11 @@ import {
 import {
   datagetRateId,
   dataGetPasses,
-  dataGetScoreFive,
-  dataGetScoreFour,
-  dataGetScoreThree,
-  dataGetScoreTwo,
-  dataGetScoreOne,
+  // dataGetScoreFive,
+  // dataGetScoreFour,
+  // dataGetScoreThree,
+  // dataGetScoreTwo,
+  // dataGetScoreOne,
 } from '../store/toolkit/slice/slice';
 
 function LessonStatisticsTable() {
@@ -89,11 +89,11 @@ function LessonStatisticsTable() {
             onClick={() => {
               dispatch(datagetRateId(obj.Id));
               dispatch(dataGetPasses());
-              dispatch(dataGetScoreFive());
-              dispatch(dataGetScoreFour());
-              dispatch(dataGetScoreThree());
-              dispatch(dataGetScoreTwo());
-              dispatch(dataGetScoreOne());
+              // dispatch(dataGetScoreFive());
+              // dispatch(dataGetScoreFour());
+              // dispatch(dataGetScoreThree());
+              // dispatch(dataGetScoreTwo());
+              // dispatch(dataGetScoreOne());
             }}
           >
             Данные {obj.Title}

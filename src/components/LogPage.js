@@ -18,7 +18,7 @@ import {
 import Table from './Table';
 import LoadingSpinner from './icons/Spinner';
 
-function MainPage() {
+function LogPage() {
   const data = useSelector(dataSelector);
   const column = useSelector(columnSelector);
   const rate = useSelector(rateSelector);
@@ -41,4 +41,4 @@ function MainPage() {
     </>
   );
 }
-export default MainPage;
+export default LogPage;

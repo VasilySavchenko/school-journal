@@ -31,32 +31,27 @@ const newReducer = createSlice({
       state.passes = state.rateId.filter((obj) => {
         return obj.Title === 'Н';
       });
-    },
-    dataGetScoreFive: (state, action) => {
       state.scoreFive = state.rateId.filter((obj) => {
         return obj.Title === '5';
       });
-    },
-    dataGetScoreFour: (state, action) => {
       state.scoreFour = state.rateId.filter((obj) => {
         return obj.Title === '4';
       });
-    },
-    dataGetScoreThree: (state, action) => {
       state.scoreThree = state.rateId.filter((obj) => {
         return obj.Title === '3';
       });
-    },
-    dataGetScoreTwo: (state, action) => {
       state.scoreTwo = state.rateId.filter((obj) => {
         return obj.Title === '2';
       });
-    },
-    dataGetScoreOne: (state, action) => {
       state.scoreOne = state.rateId.filter((obj) => {
         return obj.Title === '1';
       });
     },
+    // dataGetScoreFive: (state, action) => {},
+    // dataGetScoreFour: (state, action) => {},
+    // dataGetScoreThree: (state, action) => {},
+    // dataGetScoreTwo: (state, action) => {},
+    // dataGetScoreOne: (state, action) => {},
   },
 
   extraReducers: {
@@ -80,11 +75,11 @@ const newReducer = createSlice({
 export const {
   datagetRateId,
   dataGetPasses,
-  dataGetScoreFive,
-  dataGetScoreFour,
-  dataGetScoreThree,
-  dataGetScoreTwo,
-  dataGetScoreOne,
+  // dataGetScoreFive,
+  // dataGetScoreFour,
+  // dataGetScoreThree,
+  // dataGetScoreTwo,
+  // dataGetScoreOne,
 } = newReducer.actions;
 
 export default newReducer.reducer;
