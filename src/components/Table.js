@@ -15,10 +15,10 @@ function Table({ data, column, rate }) {
     <>
       <table className="table table-bordered text-center">
         <thead
+          className="bg-dark"
           style={{
             position: 'sticky',
             top: '0',
-            background: 'black',
             color: 'white',
           }}
         >

@@ -1,17 +1,38 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { datagetRateId } from '../store/toolkit/slice/slice';
+import {
+  columnSelector,
+  dataSelector,
+  passesSelector,
+  scoreFiveSelector,
+  scoreFourSelector,
+  scoreOneSelector,
+  scoreThreeSelector,
+  scoreTwoSelector,
+} from '../store/selectors/selectors';
+import {
+  datagetRateId,
+  dataGetPasses,
+  dataGetScoreFive,
+  dataGetScoreFour,
+  dataGetScoreThree,
+  dataGetScoreTwo,
+  dataGetScoreOne,
+} from '../store/toolkit/slice/slice';
 
 function LessonStatisticsTable() {
   const dispatch = useDispatch();
-  const d = useSelector((state) => state.toolkit.rate1);
-  const column = useSelector((state) => state.toolkit.column);
-  const data = useSelector((state) => state.toolkit.data);
+  const passes = useSelector(passesSelector);
+  const scoreFive = useSelector(scoreFiveSelector);
+  const scoreFour = useSelector(scoreFourSelector);
+  const scoreThree = useSelector(scoreThreeSelector);
+  const scoreTwo = useSelector(scoreTwoSelector);
+  const scoreOne = useSelector(scoreOneSelector);
+  const column = useSelector(columnSelector);
+  const data = useSelector(dataSelector);
 
-  const r = d?.filter((item) => {
-    return item.Title === 'Н';
-  });
-  console.log(d);
+  console.log(scoreThree);
+
   return (
     <>
       <table className="table">
@@ -30,42 +51,49 @@ function LessonStatisticsTable() {
           </tr>
           <tr>
             <th scope="row">Количество Пропусков</th>
-            <td>{r?.length}</td>
+            <td>{passes?.length}</td>
             <td></td>
           </tr>
           <tr>
             <th scope="row">Оценки 5</th>
-            <td></td>
+            <td>{scoreFive?.length}</td>
             <td></td>
           </tr>
           <tr>
             <th scope="row">Оценки 4</th>
-            <td></td>
+            <td>{scoreFour?.length}</td>
             <td></td>
           </tr>
           <tr>
             <th scope="row">Оценки 3</th>
-            <td></td>
+            <td>{scoreThree?.length}</td>
             <td></td>
           </tr>
           <tr>
             <th scope="row">Оценки 2</th>
-            <td></td>
+            <td>{scoreTwo?.length}</td>
             <td></td>
           </tr>
           <tr>
             <th scope="row">Оценки 1</th>
-            <td> </td>
-            <td> </td>
+            <td>{scoreOne?.length}</td>
+            <td></td>
           </tr>
         </tbody>
       </table>
       {column?.map((obj) => {
         return (
           <button
+            className="btn btn-dark ms-1"
             key={obj.Id}
             onClick={() => {
               dispatch(datagetRateId(obj.Id));
+              dispatch(dataGetPasses());
+              dispatch(dataGetScoreFive());
+              dispatch(dataGetScoreFour());
+              dispatch(dataGetScoreThree());
+              dispatch(dataGetScoreTwo());
+              dispatch(dataGetScoreOne());
             }}
           >
             Данные {obj.Title}

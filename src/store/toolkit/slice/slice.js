@@ -3,7 +3,7 @@ import {
   fetchData,
   fetchColumn,
   fetchRate,
-} from '../../asyncActons/asyncActions';
+} from '../slice/asyncActions/asyncActions';
 
 const initialState = {
   data: null,
@@ -11,15 +11,50 @@ const initialState = {
   error: null,
   column: null,
   rate: null,
-  rate1: null,
+  rateId: null,
+  passes: null,
+  scoreFive: null,
+  scoreFour: null,
+  scoreThree: null,
+  scoreTwo: null,
 };
 const newReducer = createSlice({
   name: 'data',
   initialState,
   reducers: {
     datagetRateId: (state, action) => {
-      state.rate1 = state.rate?.filter((obj) => {
+      state.rateId = state.rate?.filter((obj) => {
         return obj.ColumnId === action.payload;
+      });
+    },
+    dataGetPasses: (state, action) => {
+      state.passes = state.rateId.filter((obj) => {
+        return obj.Title === 'Н';
+      });
+    },
+    dataGetScoreFive: (state, action) => {
+      state.scoreFive = state.rateId.filter((obj) => {
+        return obj.Title === '5';
+      });
+    },
+    dataGetScoreFour: (state, action) => {
+      state.scoreFour = state.rateId.filter((obj) => {
+        return obj.Title === '4';
+      });
+    },
+    dataGetScoreThree: (state, action) => {
+      state.scoreThree = state.rateId.filter((obj) => {
+        return obj.Title === '3';
+      });
+    },
+    dataGetScoreTwo: (state, action) => {
+      state.scoreTwo = state.rateId.filter((obj) => {
+        return obj.Title === '2';
+      });
+    },
+    dataGetScoreOne: (state, action) => {
+      state.scoreOne = state.rateId.filter((obj) => {
+        return obj.Title === '1';
       });
     },
   },
@@ -42,5 +77,14 @@ const newReducer = createSlice({
     },
   },
 });
-export const { datagetRateId } = newReducer.actions;
+export const {
+  datagetRateId,
+  dataGetPasses,
+  dataGetScoreFive,
+  dataGetScoreFour,
+  dataGetScoreThree,
+  dataGetScoreTwo,
+  dataGetScoreOne,
+} = newReducer.actions;
+
 export default newReducer.reducer;
