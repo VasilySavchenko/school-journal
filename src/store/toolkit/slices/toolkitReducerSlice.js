@@ -3,7 +3,9 @@ import {
   fetchData,
   fetchColumn,
   fetchRate,
-} from '../slice/asyncActions/asyncActions';
+  deletePassLesson,
+  putPass,
+} from '../asyncActions/asyncActions';
 
 const initialState = {
   data: null,
@@ -23,12 +25,11 @@ const toolkitReducer = createSlice({
         return obj.ColumnId === action.payload;
       });
     },
-    dataGetPasses: (state) => {
-      state.columnInfo = state.rateId.reduce(function (acc, item) {
+    dataGetMissingLesson: (state) => {
+      state.columnInfo = state.rateId?.reduce(function (acc, item) {
         if (item.Title === 'Н' || item.Title === 'H') {
-          acc['pasess'] = (acc[item.Title] || 0) + 1;
+          acc['H'] = (acc[item.Title] || 0) + 1;
         }
-        acc[item.Title] = (acc[item.Title] || 0) + 1;
         return acc;
       }, {});
     },
@@ -53,8 +54,15 @@ const toolkitReducer = createSlice({
     [fetchRate.fulfilled]: (state, action) => {
       state.rate = action.payload;
     },
+    [deletePassLesson.fulfilled]: (state, action) => {
+      state.rate = action.payload;
+    },
+    [putPass.fulfilled]: (state, action) => {
+      state.rate = action.payload;
+    },
   },
 });
-export const { datagetRateId, dataGetPasses } = toolkitReducer.actions;
+export const { datagetRateId, dataGetMissingLesson, dataGetPasses } =
+  toolkitReducer.actions;
 
 export default toolkitReducer.reducer;

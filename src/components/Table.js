@@ -1,57 +1,90 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { deletePassLesson } from '../store/toolkit/asyncActions/asyncActions';
+import { putPass } from '../store/toolkit/asyncActions/asyncActions';
+
+function getColorMapLS() {
+  let colorMap;
+  try {
+    colorMap = JSON.parse(localStorage.getItem('colorMap'));
+  } catch (error) {
+    return {};
+  }
+  return colorMap || {};
+}
 
 function Table({ data, column }) {
-  function checkPlayer(e) {
-    if (e.target.innerText === '') {
-      e.target.innerText = 'H';
-      e.target.className = 'bg-danger';
-      localStorage.setItem('color', 'red');
-    } else if (e.target.innerText === 'H') {
-      e.target.innerText = '';
-      e.target.className = 'bg-success';
+  const dispatch = useDispatch();
+  const [colorMap, setColorMap] = useState(getColorMapLS());
+
+  useEffect(() => {
+    localStorage.setItem('colorMap', JSON.stringify(colorMap));
+  }, [colorMap]);
+
+  const checkPasess = (coords, id, columnId, active) => {
+    setColorMap({
+      ...colorMap,
+      [`${coords.row},${coords.col}`]: !colorMap[`${coords.row},${coords.col}`],
+    });
+
+    try {
+      active
+        ? dispatch(
+            putPass({
+              SchoolboyId: id,
+              ColumnId: columnId,
+              Title: 'H',
+            })
+          )
+        : dispatch(deletePassLesson({ SchoolboyId: id, ColumnId: columnId }));
+    } catch (error) {
+      console.error(error);
     }
-  }
+  };
 
   return (
     <>
       <table className="table table-bordered text-center">
-        <thead
-          className="bg-dark"
-          style={{
-            position: 'sticky',
-            top: '0',
-            color: 'white',
-          }}
-        >
+        <thead className="bg-dark top-0 text-white position-sticky">
           <tr>
             <th scope="col">№</th>
             <th scope="col">Ученик</th>
-            {column?.map((objc) => {
+            {column?.map((columnObj) => {
               return (
-                <th scope="col" key={objc.Id}>
-                  {objc.Title}
+                <th scope="col" key={columnObj.Id}>
+                  {columnObj.Title}
                 </th>
               );
             })}
           </tr>
         </thead>
         <tbody>
-          {data?.map((obj, index) => {
+          {data?.map((dataObj, indexRow) => {
             return (
-              <tr key={obj.Id}>
-                <th scope="row">{index + 1}</th>
+              <tr key={dataObj.Id}>
+                <th scope="row">{indexRow + 1}</th>
                 <td>
-                  {obj.FirstName} {obj.SecondName} {obj.LastName}
+                  {dataObj.FirstName} {dataObj.SecondName} {dataObj.LastName}
                 </td>
-                {column?.map((obje) => {
+                {column?.map((colunmObj, indexCol) => {
+                  const isExists = !colorMap[`${indexRow},${indexCol}`];
+
                   return (
                     <td
-                      className="bg-success gf"
-                      key={obje.Id}
+                      className={`${isExists ? 'bg-success' : 'bg-danger'} gf`}
+                      id={dataObj.Id}
+                      key={colunmObj.Id}
                       onClick={(e) => {
-                        checkPlayer(e);
+                        checkPasess(
+                          { row: indexRow, col: indexCol },
+                          Number(e.target.id),
+                          colunmObj.Id,
+                          isExists
+                        );
                       }}
-                    ></td>
+                    >
+                      {isExists ? '' : 'H'}
+                    </td>
                   );
                 })}
               </tr>
