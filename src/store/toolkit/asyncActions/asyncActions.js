@@ -3,10 +3,10 @@ import axios from 'axios';
 
 export const fetchData = createAsyncThunk('data/fetchData', async function () {
   try {
-    const response = await fetch('http://94.131.246.109:5555/v1/2/Schoolboy');
-    const data = await response.json();
-
-    return data.Items;
+    const response = await axios
+      .get('http://94.131.246.109:5555/v1/2/Schoolboy')
+      .then((response) => response.data.Items);
+    return response;
   } catch (error) {
     console.error(error);
   }
@@ -15,9 +15,11 @@ export const fetchColumn = createAsyncThunk(
   'data/fetchColumn',
   async function () {
     try {
-      const response = await fetch('http://94.131.246.109:5555/v1/2/Column');
-      const data = await response.json();
-      return data.Items;
+      const response = await axios
+        .get('http://94.131.246.109:5555/v1/2/Column')
+        .then((response) => response.data.Items);
+
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -26,9 +28,10 @@ export const fetchColumn = createAsyncThunk(
 
 export const fetchRate = createAsyncThunk('data/fetchRate', async function () {
   try {
-    const response = await fetch('http://94.131.246.109:5555/v1/2/Rate');
-    const data = await response.json();
-    return data.Items;
+    const response = await axios
+      .get('http://94.131.246.109:5555/v1/2/Rate')
+      .then((response) => response.data.Items);
+    return response;
   } catch (error) {
     console.error(error);
   }
